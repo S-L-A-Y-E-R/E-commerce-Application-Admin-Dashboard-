@@ -1,6 +1,9 @@
 import './globals.css'
+
 import { Roboto } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
+
+import { ModalProvider } from '@/providers/modal-provider'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['100', '400', '500', '700', '900'], variable: '--font-roboto', })
 
@@ -13,6 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
+        <ModalProvider />
         <body className={`${roboto.variable} font-roboto`}>{children}</body>
       </html>
     </ClerkProvider>
