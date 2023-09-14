@@ -12,9 +12,5 @@ export default function Home() {
     if (!isOpen) onOpen();
   }, [isOpen, onOpen]);
 
-  return (
-    <>
-
-    </>
-  )
+  return null;
 }
