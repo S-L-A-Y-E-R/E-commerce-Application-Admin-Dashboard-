@@ -30,7 +30,7 @@ const CellAction = ({ data }) => {
             router.push(`/${params.storeId}/billboards`)
             toast.success('billboard deleted.');
         } catch (e) {
-            toast.error('Make sure your removed all categories using this billboard first.');
+            toast.error('Make sure you removed all categories using this billboard first.');
         } finally {
             setLoading(false);
             setOpen(false);
