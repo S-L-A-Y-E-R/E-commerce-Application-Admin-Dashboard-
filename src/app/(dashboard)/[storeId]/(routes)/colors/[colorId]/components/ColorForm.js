@@ -16,23 +16,23 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import AlertModal from "@/components/ui/modals/alert-modal";
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select";
-import { SelectValue } from "@radix-ui/react-select";
 
 const formScheme = z.object({
     name: z.string().trim().min(1),
-    billboardId: z.string().min(1)
+    value: z.string().min(4).regex(/^#/, {
+        message: 'String must be a valid hex code'
+    })
 });
 
-const CategoryForm = ({ initialData, billboards }) => {
+const ColorForm = ({ initialData }) => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const params = useParams();
 
-    const title = initialData ? 'Edit category' : 'Create category';
-    const description = initialData ? 'Edit a category' : 'Create a category';
-    const toastMessage = initialData ? 'Category updated.' : 'Category created.';
+    const title = initialData ? 'Edit color' : 'Create color';
+    const description = initialData ? 'Edit a color' : 'Create a color';
+    const toastMessage = initialData ? 'Color updated.' : 'Color created.';
     const action = initialData ? 'Save changes' : 'Create';
 
     const form = useForm({
@@ -44,12 +44,12 @@ const CategoryForm = ({ initialData, billboards }) => {
         try {
             setLoading(true);
             if (initialData) {
-                await axios.patch(`/api/${params.storeId}/categories/${params.categoryId}`, data);
+                await axios.patch(`/api/${params.storeId}/colors/${params.colorId}`, data);
             } else {
-                await axios.post(`/api/${params.storeId}/categories`, data);
+                await axios.post(`/api/${params.storeId}/colors`, data);
             }
             router.refresh();
-            router.push(`/${params.storeId}/categories`);
+            router.push(`/${params.storeId}/colors`);
             toast.success(toastMessage);
         } catch (e) {
             toast.error('Something went wrong');
@@ -61,12 +61,12 @@ const CategoryForm = ({ initialData, billboards }) => {
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/categories/${params.categoryId}`);
+            await axios.delete(`/api/${params.storeId}/colors/${params.colorId}`);
             router.refresh();
             router.push('/');
-            toast.success('Category deleted.');
+            toast.success('Colors deleted.');
         } catch (e) {
-            toast.error('Make sure your removed all products using this category first.');
+            toast.error('Make sure your removed all products using this color first.');
         } finally {
             setLoading(false);
             setOpen(false);
@@ -97,26 +97,19 @@ const CategoryForm = ({ initialData, billboards }) => {
                             <FormItem>
                                 <FormLabel>Name</FormLabel>
                                 <FormControl>
-                                    <Input disabled={loading} placeholder='Category name' {...field} />
+                                    <Input disabled={loading} placeholder='Color label' {...field} />
                                 </FormControl>
                             </FormItem>
                         )} />
-                        <FormField control={form.control} name='billboardId' render={({ field }) => (
+                        <FormField control={form.control} name='value' render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Billboard</FormLabel>
-                                <Select disabled={loading} onValueChange={field.onChange} value={field.value} defaultValue={field.value}>
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue defaultValue={field.value} placeholder='Select a Billboard' />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        {billboards.map(billboard => (
-                                            <SelectItem key={billboard.id} value={billboard.id}>{billboard.label}</SelectItem>
-                                        ))
-                                        }
-                                    </SelectContent>
-                                </Select>
+                                <FormLabel>Value</FormLabel>
+                                <FormControl>
+                                    <div className="flex items-center gap-x-4">
+                                        <Input disabled={loading} placeholder='Color value' {...field} />
+                                        <div className="border p-4 rounded-full" style={{ backgroundColor: field.value }} />
+                                    </div>
+                                </FormControl>
                             </FormItem>
                         )} />
                     </div>
@@ -129,4 +122,4 @@ const CategoryForm = ({ initialData, billboards }) => {
     );
 }
 
-export default CategoryForm;
+export default ColorForm;

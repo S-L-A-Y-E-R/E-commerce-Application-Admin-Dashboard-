@@ -19,18 +19,18 @@ const CellAction = ({ data }) => {
 
     const onCopy = (id) => {
         navigator.clipboard.writeText(id);
-        toast.success('Size Id copied');
+        toast.success('Color Id copied');
     }
 
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
+            await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
             router.refresh();
-            router.push(`/${params.storeId}/sizes`)
-            toast.success('Size deleted.');
+            router.push(`/${params.storeId}/colors`)
+            toast.success('Color deleted.');
         } catch (e) {
-            toast.error('Make sure you removed all products using this size first.');
+            toast.error('Make sure you removed all products using this color first.');
         } finally {
             setLoading(false);
             setOpen(false);
@@ -55,7 +55,7 @@ const CellAction = ({ data }) => {
                         <Copy className="mr-2 h-4 w-4" />
                         Copy ID
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)}>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}>
                         <Edit className="mr-2 h-4 w-4" />
                         Update
                     </DropdownMenuItem>
