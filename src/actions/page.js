@@ -1,20 +1,13 @@
 import GetRevenue from "@/actions/get-revenue";
-import GetSalesCount from "@/actions/get-sales";
-import GetStockCount from "@/actions/get-stock-count";
 import Heading from "@/components/ui/Heading";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { formatter } from "@/lib/utils";
-import Overview from "@/components/overview";
 
 import { CreditCard, DollarSign, PackageIcon } from "lucide-react";
-import GetGraphRevenue from "@/actions/get-gaph-revenue";
 
 const DashboardPage = async ({ params }) => {
     const totalRevenue = await GetRevenue(params.storeId);
-    const salesCount = await GetSalesCount(params.storeId);
-    const stockCount = await GetStockCount(params.storeId);
-    const graphRevenue = await GetGraphRevenue(params.storeId);
 
     return (
         <div className="flex-col">
@@ -44,7 +37,7 @@ const DashboardPage = async ({ params }) => {
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">
-                                +{salesCount}
+                                +25
                             </div>
                         </CardContent>
                     </Card>
@@ -57,19 +50,11 @@ const DashboardPage = async ({ params }) => {
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">
-                                {stockCount}
+                                12
                             </div>
                         </CardContent>
                     </Card>
                 </div>
-                <Card className='col-span-4'>
-                    <CardHeader>
-                        <CardTitle>Overview</CardTitle>
-                    </CardHeader>
-                    <CardContent className='pl-2'>
-                        <Overview data={graphRevenue} />
-                    </CardContent>
-                </Card>
             </div>
         </div>
     );

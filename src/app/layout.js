@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 
 import { ModalProvider } from '@/providers/modal-provider'
 import { ToasterProvider } from '@/providers/toast-provider'
+import { ThemeProvider } from '@/providers/theme-provider'
 
 const roboto = Roboto({ subsets: ['latin'], weight: ['100', '400', '500', '700', '900'], variable: '--font-roboto', })
 
@@ -18,9 +19,11 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className={`${roboto.variable} font-roboto`}>
-          <ModalProvider />
-          <ToasterProvider />
-          {children}
+          <ThemeProvider attribute={'class'} defaultTheme='system' ena>
+            <ModalProvider />
+            <ToasterProvider />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
