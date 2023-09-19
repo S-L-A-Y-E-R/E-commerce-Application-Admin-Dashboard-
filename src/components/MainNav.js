@@ -4,6 +4,8 @@ import Link from "next/link"
 import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils"
+import { useState } from "react";
+import { Menu } from "lucide-react";
 
 export default function MainNav({
     className,
@@ -11,6 +13,11 @@ export default function MainNav({
 }) {
     const pathname = usePathname();
     const params = useParams();
+    const [open, setOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setOpen(state => !state);
+    };
 
     const routes = [
         {
@@ -56,22 +63,45 @@ export default function MainNav({
     ]
 
     return (
-        <nav
-            className={cn("flex items-center space-x-4 lg:space-x-6", className)}
-            {...props}
-        >
-            {routes.map((route) => (
-                <Link
-                    key={route.href}
-                    href={route.href}
-                    className={cn(
-                        'text-sm font-medium transition-colors hover:text-primary',
-                        route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
-                    )}
-                >
-                    {route.label}
-                </Link>
-            ))}
-        </nav>
+        <>
+            <nav
+                className={cn("md:flex hidden items-center space-x-4 lg:space-x-6", className)}
+                {...props}
+            >
+                {routes.map((route) => (
+                    <Link
+                        key={route.href}
+                        href={route.href}
+                        className={cn(
+                            'text-sm font-medium transition-colors hover:text-primary',
+                            route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
+                        )}
+                    >
+                        {route.label}
+                    </Link>
+                ))}
+            </nav>
+            <div className="">
+                <Menu className="md:hidden h-6 w-6 ml-4" onClick={toggleMenu} />
+                {open &&
+                    (
+                        <ul className="flex flex-col gap-3 justify-center items-center divide-y rounded-lg w-full left-0 px-4   
+                        bg-slate-800 dark:bg-white absolute translate-y-3">
+                            {routes.map((route) => (
+                                <li className='py-2 text-center w-full'>
+                                    <Link
+                                        key={route.href}
+                                        href={route.href}
+                                        className='font-medium transition-colors text-white dark:text-black hover:text-primar'
+                                    >
+                                        {route.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    )
+                }
+            </div>
+        </>
     )
 };
