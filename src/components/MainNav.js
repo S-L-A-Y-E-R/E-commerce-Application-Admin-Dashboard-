@@ -81,18 +81,20 @@ export default function MainNav({
                     </Link>
                 ))}
             </nav>
-            <div className="">
+            <div>
                 <Menu className="md:hidden h-6 w-6 ml-4" onClick={toggleMenu} />
                 {open &&
                     (
-                        <ul className="flex flex-col gap-3 justify-center items-center divide-y rounded-lg w-full left-0 px-4   
-                        bg-slate-800 dark:bg-white absolute translate-y-3">
+                        <ul className="flex md:hidden flex-col gap-3 justify-center items-center py-1 rounded-md w-44 
+                        transition-all duration-300 px-4 dark:bg-slate-800 shadow-xl bg-[#eee] absolute translate-y-3 z-50">
                             {routes.map((route) => (
-                                <li className='py-2 text-center w-full'>
+                                <li className=' w-full'>
                                     <Link
                                         key={route.href}
                                         href={route.href}
-                                        className='font-medium transition-colors text-white dark:text-black hover:text-primar'
+                                        className='font-medium text-sm transition-colors text-black dark:text-white 
+                                        hover:text-primary text-muted-foreground'
+                                        onClick={toggleMenu}
                                     >
                                         {route.label}
                                     </Link>
