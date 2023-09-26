@@ -32,7 +32,7 @@ thorough a nice graph.
 * Order creation
 * Stripe checkout
 * Stripe webhooks
-* MySQL + Prisma + PlanetScale
+* MySQL + Prisma + PostgerVercel
 
 ### Installing
 
