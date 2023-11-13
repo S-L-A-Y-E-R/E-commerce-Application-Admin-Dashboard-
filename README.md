@@ -10,7 +10,7 @@ thorough a nice graph.
 
 ### Technologies
 
-[![My Skills](https://skillicons.dev/icons?i=html,css,tailwind,js,ts,react,next,vercel,prisma)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=tailwind,react,next,vercel)](https://skillicons.dev)
 
 ## Features:
 
@@ -39,6 +39,19 @@ Clone the repo and run this command in the terminal to install the dependecies:
 
 ```
 npm install
+```
+
+Add these variables to your environment:
+
+```
+API_URL=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
 ```
 
 To run the project:
