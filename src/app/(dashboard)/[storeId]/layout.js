@@ -1,27 +1,24 @@
 import Navbar from "@/components/Navbar";
 
-import prismadb from "@/lib/prismadb";
+import axios from "axios";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-export default async function DashboardLayout({ params ,children}) {
-    const { userId } = auth();
+export default async function DashboardLayout({ params, children }) {
+  const { userId } = auth();
 
-    if (!userId) redirect('/sign-in');
+  if (!userId) redirect("/sign-in");
 
-    const store = await prismadb.store.findFirst({
-        where: {
-            id: params.storeId,
-            userId
-        }
-    });
+  const { data } = await axios.get(
+    `${process.env.API_URL}api/v1/stores?userId=${userId}&_id=${params.storeId}`
+  );
 
-    if (!store) redirect('/');
+  if (data.results < 0) redirect("/");
 
-    return (
-        <div>
-            <Navbar/>
-            <div>{children}</div>
-        </div>
-    );
-};
+  return (
+    <div>
+      <Navbar />
+      <div>{children}</div>
+    </div>
+  );
+}

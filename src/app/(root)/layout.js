@@ -1,21 +1,19 @@
-import prismadb from "@/lib/prismadb";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import axios from "axios";
 
 export default async function SetupLayout({ children }) {
-    const { userId } = auth();
+  const { userId } = auth();
 
-    if (!userId) redirect('/sign-in');
+  if (!userId) redirect("/sign-in");
 
-    const store = await prismadb.store.findFirst({
-        where: {
-            userId
-        }
-    });
+  const { data } = await axios.get(
+    `${process.env.API_URL}api/v1/stores?userId=${userId}`
+  );
 
-    if (store) redirect(`/${store.id}`);
+  // console.log(data);
 
-    return (
-        <div>{children}</div>
-    );
-};
+  if (data.results > 0) redirect(`/${data?.data[0]?._id}`);
+
+  return <div>{children}</div>;
+}

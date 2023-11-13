@@ -1,22 +1,18 @@
-import prismadb from "@/lib/prismadb";
+import axios from "axios";
 import SizeForm from "./components/SizeForm";
 
 const SizePage = async ({ params }) => {
-    const size = await prismadb.size.findUnique({
-        where: {
-            id: params.sizeId
-        }
-    });
+  const { data } = await axios.get(
+    `${process.env.API_URL}api/v1/sizes/${params.sizeId}`
+  );
 
-
-
-    return (
-        <div className="flex-col">
-            <div className="flex-1 space-y-4 p-8 pt-6">
-                <SizeForm initialData={size} />
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <SizeForm initialData={data?.data?.data} />
+      </div>
+    </div>
+  );
+};
 
 export default SizePage;

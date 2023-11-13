@@ -1,14 +1,13 @@
-import prismadb from "@/lib/prismadb";
+import axios from "axios";
 
 const GetStockCount = async (storeId) => {
-    const stockCount = await prismadb.product.count({
-        where: {
-            storeId,
-            isArchived: false
-        },
-    });
+  const { data } = await axios.get(
+    `${
+      process.env.API_URL
+    }api/v1/products?storeId=${storeId}&isArchived=${false}`
+  );
 
-    return stockCount;
-}
+  return data.results;
+};
 
 export default GetStockCount;

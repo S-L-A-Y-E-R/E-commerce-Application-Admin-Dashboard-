@@ -1,27 +1,17 @@
-import prismadb from "@/lib/prismadb";
+import axios from "axios";
 
 const GetRevenue = async (storeId) => {
-    const paidOrders = await prismadb.order.findMany({
-        where: {
-            storeId,
-            isPaid: true
-        },
-        include: {
-            orderItems: {
-                include: {
-                    product: true
-                }
-            }
-        }
-    });
+  const { data } = await axios.get(
+    `${process.env.API_URL}api/v1/orders?storeId=${storeId}&isPaid=true`
+  );
 
-    const totalRevenue = paidOrders.reduce((total, order) => {
-        const orderTotal = order.orderItems.reduce((orderSum, item) => {
-            return orderSum + item.product.price.toNumber();
-        }, 0);
-        return total + orderTotal;
+  const totalRevenue = data?.data.reduce((total, order) => {
+    const orderTotal = order.orderItems.reduce((orderSum, item) => {
+      return orderSum + item.productId.price;
     }, 0);
-    return totalRevenue;
-}
+    return total + orderTotal;
+  }, 0);
+  return totalRevenue;
+};
 
 export default GetRevenue;
