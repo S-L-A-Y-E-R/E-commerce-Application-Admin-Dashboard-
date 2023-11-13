@@ -4,7 +4,7 @@ const nextConfig = {
     domains: ["res.cloudinary.com"],
   },
   env: {
-    API_URL: "http://localhost:4000/",
+    API_URL: "https://ecommerce-ne5f.onrender.com/",
   },
 };
 
